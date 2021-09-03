@@ -4,18 +4,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class IssueDebitCardTest {
     private WebDriver driver;
 
+
+
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "./driver.win.chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "./driver/win/chromedriver.exe");
     }
 
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver =new ChromeDriver(options);
+
     }
 
     @AfterEach
@@ -23,8 +32,9 @@ public class IssueDebitCardTest {
         driver.quit();
         driver = null;
     }
+
     @Test
-    void shouldTest1(){
+    void shouldTest1() {
 
     }
 }
