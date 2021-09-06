@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/qni7vih3472u91mo?svg=true)](https://ci.appveyor.com/project/AndrewShch/automatization-shchepkin-lesson3)
