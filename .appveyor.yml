@@ -12,7 +12,6 @@ install:
   # запускаем SUT (& означает, что в фоновом режиме - не блокируем терминал для запуска тестов)
   - java -jar ./artifacts/app-order.jar &
   - chmod +x gradlew
-  - chmod +x ./driver/win/chromedriver.exe
 
 build_script:
   - ./gradlew test --info   # запускаем тест, флаг --info позволяет выводить больше информации
