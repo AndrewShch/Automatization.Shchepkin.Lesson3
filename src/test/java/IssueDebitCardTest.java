@@ -1,14 +1,8 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-
-import java.util.List;
 
 import static org.openqa.selenium.By.*;
 
@@ -18,7 +12,6 @@ public class IssueDebitCardTest {
 
     @BeforeAll
     static void setUpAll() {
-//        System.setProperty("webdriver.chrome.driver", "./driver/win/chromedriver.exe");
         WebDriverManager.chromedriver().setup();
     }
 
@@ -29,7 +22,6 @@ public class IssueDebitCardTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-//        driver = new ChromeDriver();
         driver.get("http://localhost:9999");
 
 
@@ -98,14 +90,15 @@ public class IssueDebitCardTest {
 
     @Test
     void hyphenInFieldName() {
-        //Данный тест не должен проходить, но он проходит!
+
+        //Данный тест должен проходить. При вводе дефиса в поле ФИО, должна появляться ошибка.
 
         driver.findElement(cssSelector("[data-test-id='name'] .input__control ")).sendKeys("-");
         driver.findElement(cssSelector("[data-test-id='phone'] .input__control ")).sendKeys("+79001234567");
         driver.findElement(className("checkbox__box")).click();
         driver.findElement(tagName("button")).click();
-        String actualText = driver.findElement(className("paragraph")).getText();
-        String expectedText = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        String actualText = driver.findElement(cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
+        String expectedText = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         Assertions.assertEquals(expectedText, actualText.strip());
     }
 
@@ -219,7 +212,5 @@ public class IssueDebitCardTest {
         String expectedText = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
         Assertions.assertEquals(expectedText, actualText.strip());
     }
-
-
 }
 
